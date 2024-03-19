@@ -44,16 +44,16 @@ function verifyToken(req, res, next) {
 }
 
 // 크롤링 API
-app.post('/crawl');
+app.post('/crawl', crawlController.crawlApi);
 
 // Chat GPT API
-app.post('/chat');
+app.post('/chat', chatController.chatGpiApi);
 
 // hi API
 app.get('/hi', verifyToken, userController.hiApi);
 
 // 회원가입 API
-app.post('/signup');
+app.post('/signup', userController.signupApi);
 
 // 로그인 API
 app.post('/login', userController.loginApi);

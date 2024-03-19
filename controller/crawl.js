@@ -1,3 +1,5 @@
+const crawlControll = require("../crawling");
+
 const crawlApi = async (req, res) => {
     // JSON 파일을 읽어서 클라이언트에게 응답
     // fs.readFile('results.json', 'utf8', (err, data) => {

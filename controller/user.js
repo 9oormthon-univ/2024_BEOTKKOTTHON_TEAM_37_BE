@@ -12,7 +12,7 @@ const hiApi = (req, res) => {
 const signupApi = (req, res) => {
     const saltRounds = 10;
     // 동일한 아이디가 있는지 확인
-    models.signup.findOne({
+    models.user.findOne({
         where: {
             name: req.body.name
         }
@@ -25,7 +25,7 @@ const signupApi = (req, res) => {
         else {
             bcrypt.hash(req.body.password, saltRounds, function(err, hashed_password) {
                 if (err) throw err;
-                models.signup.create({
+                models.user.create({
                     name: req.body.name,
                     password: hashed_password
                 }).then(() => {
@@ -39,7 +39,7 @@ const signupApi = (req, res) => {
 }
 
 const loginApi = (req, res) => {
-    models.signup.findOne({
+    models.user.findOne({
         where: {
             name: req.body.name
         }
@@ -78,4 +78,4 @@ const loginApi = (req, res) => {
     })
 }
 
-module.exports = {hiApi, loginApi};
+module.exports = {hiApi, loginApi, signupApi};
