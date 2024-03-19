@@ -78,4 +78,15 @@ const loginApi = (req, res) => {
     })
 }
 
-module.exports = {hiApi, loginApi, signupApi};
+const testApi = (req, res) => {
+    const name = req.body.name;
+    console.log(name); // 확인용 출력
+    if (name) {
+        res.json({ message: `hi ${name}!` });
+    }
+    else {
+        res.status(400).json({ error: 'Name is None.' });
+    }
+}
+
+module.exports = {hiApi, loginApi, signupApi, testApi};
