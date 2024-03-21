@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 8000; 
+const port = process.env.PORT || 8000; 
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');        // 미들 웨어
 const cookieparser = require('cookie-parser');    // 미들 웨어
@@ -63,10 +63,10 @@ app.post('/signup', userController.signupApi);
 app.post('/login', userController.loginApi);
 
 // 마이페이지 API
-app.get('/mypage', verifyToken, userController.myPageApi);
+//app.get('/mypage', verifyToken, userController.myPageApi);
 
 // test API
-app.post('/test', userController.testApi);
+//app.post('/test', userController.testApi);
 
 app.listen(port, () => {
     console.log(`Server is running at ${port}!`);
