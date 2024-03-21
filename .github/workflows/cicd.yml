@@ -21,6 +21,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Print PATH environment variable
+        run: echo $PATH
+
+      - name: Install Chromium
+        run: sudo apt-get update && sudo apt-get install -y chromium-browser
+
       # Run tests or other steps
       # - name: Run tests
       #   run: npm test
