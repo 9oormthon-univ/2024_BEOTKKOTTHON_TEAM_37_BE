@@ -1,4 +1,4 @@
-const crawlControll = require("../crawling");
+const crawlControll = require("../crawling_kakao");
 
 const crawlApi = async (req, res) => {
     // JSON 파일을 읽어서 클라이언트에게 응답
