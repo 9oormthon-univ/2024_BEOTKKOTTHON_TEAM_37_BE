@@ -36,5 +36,8 @@ RUN chmod +x init-script.sh
 # Expose port
 EXPOSE 8080
 
+# Define environment variable
+ENV NODE_ENV production
+
 # Run initialization script when the container starts
 CMD ["./init-script.sh"]
