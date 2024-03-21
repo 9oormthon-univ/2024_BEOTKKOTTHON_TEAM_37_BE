@@ -12,6 +12,12 @@ COPY . .
 # Install any needed packages specified in package.json
 RUN npm install
 
+# Install Chromium for Puppeteer
+RUN apt-get update && apt-get install -y chromium
+
+# Set Puppeteer to use Chromium from the installed location
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
