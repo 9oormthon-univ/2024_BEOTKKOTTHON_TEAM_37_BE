@@ -63,10 +63,10 @@ app.post('/signup', userController.signupApi);
 app.post('/login', userController.loginApi);
 
 // 마이페이지 API
-app.get('/mypage', verifyToken, userController.myPageApi);
+//app.get('/mypage', verifyToken, userController.myPageApi);
 
 // test API
-app.post('/test', userController.testApi);
+//app.post('/test', userController.testApi);
 
 app.listen(port, () => {
     console.log(`Server is running at ${port}!`);
