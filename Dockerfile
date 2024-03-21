@@ -15,6 +15,9 @@ RUN npm install
 # Install Chromium for Puppeteer
 RUN apt-get update && apt-get install -y chromium
 
+# Get the path of installed Chromium
+RUN which chromium
+
 # Set Puppeteer to use Chromium from the installed location
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
