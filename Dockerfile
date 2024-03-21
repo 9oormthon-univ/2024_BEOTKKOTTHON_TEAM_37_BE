@@ -12,17 +12,29 @@ COPY . .
 # Install any needed packages specified in package.json
 RUN npm install
 
-# Install Chromium for Puppeteer
-RUN apt-get update && apt-get install -y chromium
+# # Install Chromium for Puppeteer
+# RUN apt-get update && apt-get install -y chromium
 
-# Set Puppeteer to use Chromium from the installed location
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+# # Set Puppeteer to use Chromium from the installed location
+# ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
-# Make port 8080 available to the world outside this container
+# # Make port 8080 available to the world outside this container
+# EXPOSE 8080
+
+# # Define environment variable
+# ENV NODE_ENV production
+
+# # Run server.js when the container launches
+# CMD ["node", "server.js"]
+
+# Copy initialization script
+COPY init-script.sh .
+
+# Set execute permission for the initialization script
+RUN chmod +x init-script.sh
+
+# Expose port
 EXPOSE 8080
 
-# Define environment variable
-ENV NODE_ENV production
-
-# Run server.js when the container launches
-CMD ["node", "server.js"]
+# Run initialization script when the container starts
+CMD ["./init-script.sh"]
