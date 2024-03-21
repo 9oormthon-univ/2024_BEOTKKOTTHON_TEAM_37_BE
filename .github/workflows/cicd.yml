@@ -27,6 +27,8 @@ jobs:
       - name: Install Chromium
         run: sudo apt-get update && sudo apt-get install -y chromium-browser
 
+      - name: Print installed Chromium path
+        run: which chromium-browser
       # Run tests or other steps
       # - name: Run tests
       #   run: npm test
