@@ -13,7 +13,7 @@ COPY . .
 RUN npm install
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8080
+EXPOSE 8000
 
 # Define environment variable
 ENV NODE_ENV production
