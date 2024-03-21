@@ -13,6 +13,7 @@ const crawlController = require('./controller/crawl.js');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieparser());
+app.use(cors()); 
 
 // 미들 웨어
 function verifyToken(req, res, next) {
