@@ -1,1 +1,4 @@
 google-chrome-stable_current_amd64.deb
+
+# api 키 관리
+.env

@@ -1,4 +1,4 @@
-const crawlControll = require("../crawling");
+const crawlControll = require("../crawling_kakao");
 
 const crawlApi = async (req, res) => {
     const url = req.body.url;
