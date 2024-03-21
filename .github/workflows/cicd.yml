@@ -24,8 +24,9 @@ jobs:
       # Run tests or other steps
       # - name: Run tests
       #   run: npm test
-      - name: Create config.json
+      - name: Create config directory and config.json
         run: |
+          mkdir -p config
           echo '${{ secrets.CONFIG_JSON }}' > config/config.json
 
       - name: Authenticate to Google Cloud
