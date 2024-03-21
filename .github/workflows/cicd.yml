@@ -1,0 +1,64 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ main, feat/cicd ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  setup-build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21.7.1'
+
+      - name: Install dependencies
+        run: npm install
+
+      # Run tests or other steps
+      # - name: Run tests
+      #   run: npm test
+      - name: Create config.json
+        run: |
+          echo '${{ secrets.CONFIG_JSON }}' > config/config.json
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+
+      # Build your project if necessary (e.g., TypeScript to JavaScript)
+      # - name: Build
+      #   run: npm run build
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Google Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: asia-northeast3-docker.pkg.dev
+          username: _json_key
+          password: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: asia-northeast3-docker.pkg.dev/ancient-ivy-416408/groom/decalcomanie:latest
+          file: Dockerfile
+          context: .
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v0.5.0
+        with:
+          service: your-service-name
+          image: asia-northeast3-docker.pkg.dev/ancient-ivy-416408/groom/decalcomanie:latest
+          region: asia-northeast3
+          credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
