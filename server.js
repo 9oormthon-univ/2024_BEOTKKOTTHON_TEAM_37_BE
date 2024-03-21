@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 8000; 
+const port = process.env.PORT || 8000; 
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');        // 미들 웨어
 const cookieparser = require('cookie-parser');    // 미들 웨어
