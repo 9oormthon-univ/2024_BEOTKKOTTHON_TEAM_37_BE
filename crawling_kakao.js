@@ -47,7 +47,7 @@ async function crawlAndSave(url) {
     crawlingResults['comments'] = comments.slice(0, 20);
 
     // 결과를 JSON 파일로 저장
-    // fs.writeFileSync('results.json', JSON.stringify(crawlingResults, null, 4), 'utf-8');
+    fs.writeFileSync('./results.json', JSON.stringify(crawlingResults, null, 4), 'utf-8');
     
     await browser.close();
     return crawlingResults; // JSON 객체로 반환
