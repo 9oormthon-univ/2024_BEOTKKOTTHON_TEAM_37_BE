@@ -1,3 +1,4 @@
+// 네이버 웹툰 크롤링
 const puppeteer = require('puppeteer');
 
 async function crawlAndSave(url) {

@@ -27,7 +27,8 @@ const signupApi = (req, res) => {
                 if (err) throw err;
                 models.user.create({
                     name: req.body.name,
-                    password: hashed_password
+                    password: hashed_password,
+                    email: req.body.email
                 }).then(() => {
                     return res.json({message: "success signup!"});
                 }).catch(err => {
