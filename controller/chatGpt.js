@@ -17,8 +17,8 @@ const chatGpiApi = async (req, res) => {
         "Protect the webtoon authors from psychological harm by filtering out personal attacks and extreme expressions.\n" +
         "Use the comments to understand reader reactions and incorporate this feedback into the work, as it can be a source of inspiration and improvement for the author."+
         "REMEMBER, FEEDBACK SHOULD BE WRITTEN IN KOREAN, AND NO OTHER WORDS ARE PEMITTED.\n\n"+
-        "Here is an example:\n"+
-        "[COMMENTS]\n"+
+        "Here is an example:\n";
+        const oneShot = "[COMMENTS]\n"+
         "comment 1: 와 저당시 월급으로 92만원을 후임들위해 쓰는건 진짜 레전드긴하다 ㄷㄷ\n"+
         "comment 2: 후임들 꿈을 위해 92만원 쓸 시간에 아직도 본인 꿈은 못 정한 정수아가 레전드"+
         "comment 3: 쟤 설정이 아빠없고 여행도 못가고 금토일 알바뛰고오빠들이랑 겨우 벌어쓰는 어려운 형편 아녔냐....\n"+
@@ -46,6 +46,8 @@ const chatGpiApi = async (req, res) => {
         console.log(query_comments);
 
         const message = prompt + query_comments;
+        // 죄종 버전은 원샷 추가하기
+        //const message = prompt + oneShot + query_comments;
 
         // ChatGPT API에 요청을 보내기 위한 데이터 준비
         const data = {
@@ -66,6 +68,7 @@ const chatGpiApi = async (req, res) => {
         });
 
         const responseData = await response.json(); // 응답 데이터 가져오기
+        console.log(responseData)
         const contentOnly = responseData.choices[0].message.content;
         const gptFeedback = {
             title: crawlResult.title,
