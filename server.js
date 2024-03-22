@@ -13,6 +13,7 @@ const crawlController = require('./controller/crawl.js');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieparser());
+app.use(cors());
 
 // 미들 웨어
 function verifyToken(req, res, next) {
@@ -37,6 +38,7 @@ function verifyToken(req, res, next) {
             else {
                 console.log(decoded.name);
                 req.name = decoded.name;
+                req.email = decoded.email;
                 next();
             }
         })
@@ -62,5 +64,5 @@ app.post('/login', userController.loginApi);
 app.post('/test', userController.testApi);
 
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}!`);
+    console.log(`Server is running at ${port}!`);
 });

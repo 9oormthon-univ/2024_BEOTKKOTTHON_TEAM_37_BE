@@ -81,11 +81,11 @@ const loginApi = (req, res) => {
     })
 }
 
-const myPageApi = (req, res) => {
-    const userInfo = { name: req.name, email: req.email };
-    // 추가로 필터링된 댓글도 포함하기
-    return res.json(userInfo);
-}
+// const myPageApi = (req, res) => {
+//     const userInfo = { name: req.name, email: req.email };
+//     // 추가로 필터링된 댓글도 포함하기
+//     return res.json(userInfo);
+// }
 
 const testApi = (req, res) => {
     const name = req.body.name;
