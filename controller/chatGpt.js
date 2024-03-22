@@ -48,9 +48,9 @@ const chatGpiApi = async (req, res) => {
         const query_comments = crawlResult.comments.map((comment, index) => `comment ${index + 1}: ${comment}`).join('\n');
         // console.log(query_comments);
 
-        const message = prompt + query_comments;
+        //const message = prompt + query_comments;
         // 죄종 버전은 원샷 추가하기
-        //const message = prompt + oneShot + query_comments;
+        const message = prompt + oneShot + query_comments;
 
         // ChatGPT API에 요청을 보내기 위한 데이터 준비
         const data = {
@@ -81,25 +81,51 @@ const chatGpiApi = async (req, res) => {
             feedback: contentOnly
         };
  
-        // 웹툰 생성
-        const createdWebtoon = await models.webtoon.create({
-            webtoon_title: crawlResult.title
+        const userId = req.id; // 인증 미들웨어에서 추가된 사용자 ID
+
+        // 웹툰 생성 또는 찾기
+        const [createdWebtoon, created] = await models.webtoon.findOrCreate({
+            where: { webtoon_title: crawlResult.title },
+            defaults: {
+                webtoon_title: crawlResult.title,
+                user_id: userId // 웹툰과 관련된 사용자 ID 추가
+            }
         });
 
         // 생성된 웹툰의 ID 가져오기
         const webtoonId = createdWebtoon.id;
         
-        // 데이터베이스에 저장
-        models.feedback.create({
-            link: url,                          // 링크
-            feedback: contentOnly,              // 필터링된 댓글
-            subtitle: crawlResult.subtitle,     // 소제목
-            webtoon_id: webtoonId               // 웹툰 ID 추가
+        // 데이터베이스에 피드백 저장 또는 업데이트
+        const feedbackExists = await models.feedback.findOne({
+            where: {
+                subtitle: crawlResult.subtitle,
+                webtoon_id: webtoonId
+            }
         });
 
-        models.webtoon.create({
-            webtoon_title: crawlResult.title
-        });
+        if (feedbackExists) {
+            // 동일한 소제목을 가진 피드백이 존재한다면, 업데이트
+            await models.feedback.update({
+                link: url,                                // 링크 업데이트
+                feedback: contentOnly,                    // 필터링된 댓글 업데이트
+                number: crawlResult.number,
+                comments: query_comments,     // 댓글들 업데이트
+            }, {
+                where: {
+                    id: feedbackExists.id                // 업데이트할 피드백 ID 지정
+                }
+            });
+        } else {
+            // 존재하지 않는다면, 새로운 피드백 생성
+            await models.feedback.create({
+                link: url,                                // 링크
+                feedback: contentOnly,                    // 필터링된 댓글
+                number: crawlResult.number,
+                subtitle: crawlResult.subtitle,           // 소제목
+                comments: query_comments,     // 댓글들
+                webtoon_id: webtoonId,                    // 웹툰 ID 추가
+            });
+        }
     
         // 클라이언트에 응답 반환
         res.json(gptFeedback); 

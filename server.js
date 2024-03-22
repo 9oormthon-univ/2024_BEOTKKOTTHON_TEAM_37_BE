@@ -35,6 +35,7 @@ function verifyToken(req, res, next) {
                 return res.status(401).json({message: 'TokenFail'}); 
             } else {
                 // 검증된 토큰에서 사용자 정보를 추출하여 요청 객체에 저장
+                req.id = decoded.id;
                 req.email = decoded.email;
                 req.name = decoded.name;
                 next(); // 다음 미들웨어로 제어를 넘깁니다.
