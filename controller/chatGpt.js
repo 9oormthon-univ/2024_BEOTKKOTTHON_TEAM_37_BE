@@ -1,7 +1,10 @@
 require('dotenv').config();
 const fs = require('fs').promises;
+// const { Models } = require('openai/resources');
 const crawlControl = require("../crawling_kakao");
-const apiKey = process.env.OPENAI_API_KEY;  
+const apiKey = process.env.OPENAI_API_KEY; 
+const models = require('../models'); 
+// const feedbackModel  = require('../models/feedback');
 
 const chatGpiApi = async (req, res) => {
     
@@ -43,7 +46,7 @@ const chatGpiApi = async (req, res) => {
 
         // 결과에서 comments 필드를 추출하여 message에 할당
         const query_comments = crawlResult.comments.map((comment, index) => `comment ${index + 1}: ${comment}`).join('\n');
-        console.log(query_comments);
+        // console.log(query_comments);
 
         const message = prompt + query_comments;
         // 죄종 버전은 원샷 추가하기
@@ -70,13 +73,36 @@ const chatGpiApi = async (req, res) => {
         const responseData = await response.json(); // 응답 데이터 가져오기
         console.log(responseData)
         const contentOnly = responseData.choices[0].message.content;
+    
         const gptFeedback = {
             title: crawlResult.title,
             contentNum: crawlResult.number,
             subtitle: crawlResult.subtitle,
             feedback: contentOnly
         };
-        res.json(gptFeedback); // 클라이언트에 응답 반환
+ 
+        // 웹툰 생성
+        const createdWebtoon = await models.webtoon.create({
+            webtoon_title: crawlResult.title
+        });
+
+        // 생성된 웹툰의 ID 가져오기
+        const webtoonId = createdWebtoon.id;
+        
+        // 데이터베이스에 저장
+        models.feedback.create({
+            link: url,                          // 링크
+            feedback: contentOnly,              // 필터링된 댓글
+            subtitle: crawlResult.subtitle,     // 소제목
+            webtoon_id: webtoonId               // 웹툰 ID 추가
+        });
+
+        models.webtoon.create({
+            webtoon_title: crawlResult.title
+        });
+    
+        // 클라이언트에 응답 반환
+        res.json(gptFeedback); 
 
     } catch (error) {
         console.error('Error:', error);

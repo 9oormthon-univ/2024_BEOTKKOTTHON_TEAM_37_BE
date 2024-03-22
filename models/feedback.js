@@ -23,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'feedback',
+    tableName: 'feedbacks',
+    timestamps: false
   });
   return feedback;
 };

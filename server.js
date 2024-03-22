@@ -52,7 +52,7 @@ function verifyToken(req, res, next) {
 app.post('/crawl', crawlController.crawlApi);
 
 // Chat GPT API
-app.post('/chat', chatController.chatGpiApi);
+app.post('/chat', verifyToken, chatController.chatGpiApi);
 
 // hi API
 app.get('/hi', verifyToken, userController.hiApi);
