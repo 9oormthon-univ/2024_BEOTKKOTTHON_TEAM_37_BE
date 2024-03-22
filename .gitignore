@@ -1,1 +1,8 @@
 google-chrome-stable_current_amd64.deb
+
+# api 키 관리
+.env
+node_modules
+ancient-ivy-416408-f8dea10e5b2d.json
+.git
+config.json

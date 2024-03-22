@@ -15,3 +15,28 @@ nvm use node
 node module 삭제 후 재 설치
 rm -rf node_modules
 npm install
+
+
+```
+2024_BEOTKKOTTHON_TEAM_37_BE
+├─ .dockerignore
+├─ .nvmrc
+├─ config
+│  └─ config.json
+├─ controller
+│  ├─ chatGpt.js
+│  ├─ crawl.js
+│  └─ user.js
+├─ crawling_kakao.js
+├─ crawling_naver.js
+├─ Dockerfile
+├─ models
+│  ├─ index.js
+│  └─ user.js
+├─ package-lock.json
+├─ package.json
+├─ README.md
+├─ results.json
+└─ server.js
+
+```
