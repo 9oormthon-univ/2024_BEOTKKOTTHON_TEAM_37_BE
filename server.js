@@ -15,36 +15,32 @@ const userController = require('./controller/user.js');
 const chatController = require('./controller/chatGpt.js');
 const crawlController = require('./controller/crawl.js');
 
-// 미들 웨어
 function verifyToken(req, res, next) {
-    const token = req.cookies['accessToken']; // accessToken추출
+    try {
+        const authHeader = req.headers['accesstoken']; // 자동으로 accesstoken으로 저장됨
 
-    console.log(token); 
+        console.log(authHeader);
 
-    // token이 존재하지 않으면
-    if (!token) {
-        return res.status(403).json('notoken');
-    }
-    // token이 존재하면
-    else {
-        const secretKey = "accesstoken";
+        // 헤더에서 Authorization 값이 없으면
+        if (!authHeader) {
+            return res.status(403).json({ error: '토큰이 없습니다.' });
+        }
 
         // jwt를 사용하여 토큰 유효성 검증
-        jwt.verify(token, secretKey, (err, decoded) => {
+        jwt.verify(authHeader, 'accesstoken', (err, decoded) => {
             if (err) {
-                res.clearCookie('accessToken', {path: '/', exprise: new Date(0)});
-                return res.status(401).json({message:'TokenFail'});
-            }
-            else {
-                // 복호화된 토큰의 내용 확인
-                console.log('이메일: ', decoded.email);
-                console.log('사용자 이름: ', decoded.name);
+                // 토큰이 유효하지 않으면
+                return res.status(401).json({message:'TokenFail'}); // 프론트가 이 메세지를 받았을 경우 해당 토큰을 로컬스토리지에서 지우고 로그인 페이지로 이동.
+            } else {
+                // 검증된 토큰에서 사용자 정보를 추출하여 요청 객체에 저장
                 req.email = decoded.email;
                 req.name = decoded.name;
-                req.email = decoded.email;
-                next();
+                next(); // 다음 미들웨어로 제어를 넘깁니다.
             }
-        })
+        });
+    } catch (error) {
+        console.error('토큰 검증 중 에러 발생:', error);
+        return res.status(500).json({ error: '서버 에러' });
     }
 }
 
