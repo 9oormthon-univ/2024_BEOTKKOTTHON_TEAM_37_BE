@@ -58,6 +58,7 @@ const loginApi = async (req, res) => {
             const accessToken = jwt.sign({
                 id: foundData.id,
                 email: foundData.email,
+                name: foundData.name,
             }, "accesstoken", {
                 expiresIn: '1d', // 여기에서 토큰 만료 시간을 1일로 설정
                 issuer: "About Tech",
