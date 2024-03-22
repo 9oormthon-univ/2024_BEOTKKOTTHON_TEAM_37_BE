@@ -40,46 +40,40 @@ const signupApi = (req, res) => {
     });
 }
 
-const loginApi = (req, res) => {
-    models.user.findOne({
-        where: {
-            email: req.body.email
-        }
-    })
-    .then((foundData) => {
+const loginApi = async (req, res) => {
+    try {
+        const foundData = await models.user.findOne({
+            where: {
+                email: req.body.email
+            }
+        });
+
         if (!foundData) {
             return res.status(404).json({ error: "해당 이메일이 없습니다." });
-        } else {
-            bcrypt.compare(req.body.password, foundData.password, function(err, result) {
-                if (err) throw err;
-                if (result) {
-                    console.log("로그인 성공!");
-                    try {
-                        const accessToken = jwt.sign({ // jwt생성
-                            id: foundData.id,
-                            email: foundData.email,
-                            name: foundData.name, 
-                        }, "accesstoken", {
-                            expiresIn: '1h',
-                            issuer: "About Tech",
-                        });
-    
-                        res.cookie("accessToken", accessToken, { // 클라이언트에게 쿠키 전달
-                            secure: false, // https면 true
-                            httpOnly: true,
-                        });
-                        return res.status(200).json({ message: "success login!" });
-                    } catch (error) {
-                        console.log(error);
-                        return res.status(500).send(error);
-                    }
-                } else {
-                    return res.status(401).json({ error: "비밀번호가 일치하지 않습니다." });
-                }
-            });
         }
-    })
+
+        const passwordMatch = await bcrypt.compare(req.body.password, foundData.password);
+
+        if (passwordMatch) {
+            const accessToken = jwt.sign({
+                id: foundData.id,
+                email: foundData.email,
+            }, "accesstoken", {
+                expiresIn: '1h',
+                issuer: "About Tech",
+            });
+
+            // 액세스 토큰을 응답 본문에 포함시킴
+            return res.status(200).json({ message: "success login!", accessToken });
+        } else {
+            return res.status(401).json({ error: "비밀번호가 일치하지 않습니다." });
+        }
+    } catch (error) {
+        console.error('로그인 중 에러 발생:', error);
+        return res.status(500).send(error);
+    }
 }
+
 
 // const myPageApi = (req, res) => {
 //     const userInfo = { name: req.name, email: req.email };
