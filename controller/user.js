@@ -58,7 +58,7 @@ const loginApi = (req, res) => {
                         const accessToken = jwt.sign({ // jwt생성
                             id: foundData.id,
                             email: foundData.email,
-                            name: foundData.name, // 2개 넣어도 되나
+                            name: foundData.name, 
                         }, "accesstoken", {
                             expiresIn: '1h',
                             issuer: "About Tech",
@@ -98,4 +98,4 @@ const testApi = (req, res) => {
     }
 }
 
-module.exports = {hiApi, loginApi, signupApi, testApi, myPageApi};
+module.exports = {hiApi, loginApi, signupApi, testApi };
