@@ -41,6 +41,7 @@ function verifyToken(req, res, next) {
                 console.log('사용자 이름: ', decoded.name);
                 req.email = decoded.email;
                 req.name = decoded.name;
+                req.email = decoded.email;
                 next();
             }
         })

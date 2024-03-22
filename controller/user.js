@@ -4,22 +4,22 @@ const models = require('../models');
 
 const hiApi = (req, res) => {
     const data = {
-        message: `hi ${req.name}`
+        message: `hi ${req.email}`
     }
     return res.json(data);
 }
 
 const signupApi = (req, res) => {
     const saltRounds = 10;
-    // 동일한 아이디가 있는지 확인
+    // 동일한 이메일이 있는지 확인
     models.user.findOne({
         where: {
-            name: req.body.name
+            email: req.body.email
         }
     }).then(user => {
-        // 이미 존재하는 아이디라면, 에러와 함께 리턴
+        // 이미 존재하는 이메일이라면, 에러와 함께 리턴
         if (user) {
-            return res.status(400).json({error: "이미 존재하는 아이디입니다."});
+            return res.status(400).json({error: "이미 존재하는 이메일입니다."});
         }
         // 존재하지 않는 경우, 비밀번호를 해시하고 새로운 사용자 등록
         else {
@@ -30,6 +30,7 @@ const signupApi = (req, res) => {
                     password: hashed_password,
                     email: req.body.email
                 }).then(() => {
+                    console.log("회원가입 성공!")
                     return res.json({message: "success signup!"});
                 }).catch(err => {
                     return res.status(500).json({error: "데이터베이스 저장 중 오류가 발생했습니다."});
@@ -42,27 +43,28 @@ const signupApi = (req, res) => {
 const loginApi = (req, res) => {
     models.user.findOne({
         where: {
-            name: req.body.name
+            email: req.body.email
         }
     })
     .then((foundData) => {
         if (!foundData) {
-            return res.status(404).json({ error: "해당 아이디가 없습니다." });
+            return res.status(404).json({ error: "해당 이메일이 없습니다." });
         } else {
             bcrypt.compare(req.body.password, foundData.password, function(err, result) {
                 if (err) throw err;
                 if (result) {
-                    console.log("로그인 성공~");
+                    console.log("로그인 성공!");
                     try {
                         const accessToken = jwt.sign({ // jwt생성
                             id: foundData.id,
-                            name: foundData.name,
+                            email: foundData.email,
+                            name: foundData.name, // 2개 넣어도 되나
                         }, "accesstoken", {
                             expiresIn: '1h',
                             issuer: "About Tech",
                         });
     
-                        res.cookie("accessToken", accessToken, {
+                        res.cookie("accessToken", accessToken, { // 클라이언트에게 쿠키 전달
                             secure: false, // https면 true
                             httpOnly: true,
                         });
@@ -79,6 +81,12 @@ const loginApi = (req, res) => {
     })
 }
 
+// const myPageApi = (req, res) => {
+//     const userInfo = { name: req.name, email: req.email };
+//     // 추가로 필터링된 댓글도 포함하기
+//     return res.json(userInfo);
+// }
+
 const testApi = (req, res) => {
     const name = req.body.name;
     console.log(name); // 확인용 출력
@@ -90,4 +98,4 @@ const testApi = (req, res) => {
     }
 }
 
-module.exports = {hiApi, loginApi, signupApi, testApi};
+module.exports = {hiApi, loginApi, signupApi, testApi, myPageApi};
