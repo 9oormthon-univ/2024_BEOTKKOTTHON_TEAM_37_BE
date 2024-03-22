@@ -17,20 +17,22 @@ const crawlController = require('./controller/crawl.js');
 
 function verifyToken(req, res, next) {
     try {
-        const authHeader = req.headers['accesstoken']; // 자동으로 accesstoken으로 저장됨
+        // 'Authorization' 헤더에서 토큰을 추출
+        const authHeader = req.headers['authorization'];
 
-        console.log(authHeader);
-
-        // 헤더에서 Authorization 값이 없으면
-        if (!authHeader) {
-            return res.status(403).json({ error: '토큰이 없습니다.' });
+        // 'Authorization' 헤더 값이 Bearer 토큰 형식인지 확인
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(403).json({ error: '토큰이 제공되지 않았거나, Bearer 타입이 아닙니다.' });
         }
 
+        // 'Bearer '를 제거하고 실제 토큰 값만 추출
+        const token = authHeader.substring(7, authHeader.length);
+
         // jwt를 사용하여 토큰 유효성 검증
-        jwt.verify(authHeader, 'accesstoken', (err, decoded) => {
+        jwt.verify(token, 'accesstoken', (err, decoded) => {
             if (err) {
                 // 토큰이 유효하지 않으면
-                return res.status(401).json({message:'TokenFail'}); // 프론트가 이 메세지를 받았을 경우 해당 토큰을 로컬스토리지에서 지우고 로그인 페이지로 이동.
+                return res.status(401).json({message: 'TokenFail'}); 
             } else {
                 // 검증된 토큰에서 사용자 정보를 추출하여 요청 객체에 저장
                 req.email = decoded.email;

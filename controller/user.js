@@ -59,7 +59,7 @@ const loginApi = async (req, res) => {
                 id: foundData.id,
                 email: foundData.email,
             }, "accesstoken", {
-                expiresIn: '1h',
+                expiresIn: '1d', // 여기에서 토큰 만료 시간을 1일로 설정
                 issuer: "About Tech",
             });
 
