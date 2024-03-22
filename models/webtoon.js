@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'webtoon',
+    tableName: 'webtoons',
+    timestamps: false
   });
   return webtoon;
 };

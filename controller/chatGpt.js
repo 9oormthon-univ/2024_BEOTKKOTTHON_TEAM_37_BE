@@ -3,8 +3,8 @@ const fs = require('fs').promises;
 // const { Models } = require('openai/resources');
 const crawlControl = require("../crawling_kakao");
 const apiKey = process.env.OPENAI_API_KEY; 
-// const models = require('../models'); 
-const feedbackModel  = require('../models/feedback');
+const models = require('../models'); 
+// const feedbackModel  = require('../models/feedback');
 
 const chatGpiApi = async (req, res) => {
     
@@ -71,25 +71,35 @@ const chatGpiApi = async (req, res) => {
         });
 
         const responseData = await response.json(); // 응답 데이터 가져오기
+        console.log(responseData)
         const contentOnly = responseData.choices[0].message.content;
+    
         const gptFeedback = {
             title: crawlResult.title,
             contentNum: crawlResult.number,
             subtitle: crawlResult.subtitle,
             feedback: contentOnly
         };
-
-        // 데이터베이스에 저장
-        
-        feedbackModel.create({
-            number: crawlResult.number, // 회차
-            link: url,          // 링크
-            feedback: contentOnly, // 필터링된 댓글
-            subtitle: crawlResult.subtitle
+ 
+        // 웹툰 생성
+        const createdWebtoon = await models.webtoon.create({
+            webtoon_title: crawlResult.title
         });
-        
 
-        console.log("확인");
+        // 생성된 웹툰의 ID 가져오기
+        const webtoonId = createdWebtoon.id;
+        
+        // 데이터베이스에 저장
+        models.feedback.create({
+            link: url,                          // 링크
+            feedback: contentOnly,              // 필터링된 댓글
+            subtitle: crawlResult.subtitle,     // 소제목
+            webtoon_id: webtoonId               // 웹툰 ID 추가
+        });
+
+        models.webtoon.create({
+            webtoon_title: crawlResult.title
+        });
     
         // 클라이언트에 응답 반환
         res.json(gptFeedback); 
