@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "37",
+    "password": "",
     "database": "goorm",
-    "host": "34.64.161.162",
+    "host": "",
     "dialect": "mysql"
   },
   "test": {
