@@ -15,35 +15,36 @@ const userController = require('./controller/user.js');
 const chatController = require('./controller/chatGpt.js');
 const crawlController = require('./controller/crawl.js');
 
+// 미들 웨어
 function verifyToken(req, res, next) {
-    try {
-        // 'Authorization' 헤더에서 토큰을 추출
-        const authHeader = req.headers['authorization'];
+    const token = req.cookies['accessToken']; // accessToken추출
 
-        // 'Authorization' 헤더 값이 Bearer 토큰 형식인지 확인
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return res.status(403).json({ error: '토큰이 제공되지 않았거나, Bearer 타입이 아닙니다.' });
-        }
+    console.log(token); 
 
-        // 'Bearer '를 제거하고 실제 토큰 값만 추출
-        const token = authHeader.substring(7, authHeader.length);
+    // token이 존재하지 않으면
+    if (!token) {
+        return res.status(403).json('notoken');
+    }
+    // token이 존재하면
+    else {
+        const secretKey = "accesstoken";
 
         // jwt를 사용하여 토큰 유효성 검증
-        jwt.verify(token, 'accesstoken', (err, decoded) => {
+        jwt.verify(token, secretKey, (err, decoded) => {
             if (err) {
-                // 토큰이 유효하지 않으면
-                return res.status(401).json({message: 'TokenFail'}); 
-            } else {
-                // 검증된 토큰에서 사용자 정보를 추출하여 요청 객체에 저장
-                req.id = decoded.id;
+                res.clearCookie('accessToken', {path: '/', exprise: new Date(0)});
+                return res.status(401).json({message:'TokenFail'});
+            }
+            else {
+                // 복호화된 토큰의 내용 확인
+                console.log('이메일: ', decoded.email);
+                console.log('사용자 이름: ', decoded.name);
                 req.email = decoded.email;
                 req.name = decoded.name;
-                next(); // 다음 미들웨어로 제어를 넘깁니다.
+                req.email = decoded.email;
+                next();
             }
-        });
-    } catch (error) {
-        console.error('토큰 검증 중 에러 발생:', error);
-        return res.status(500).json({ error: '서버 에러' });
+        })
     }
 }
 
@@ -62,11 +63,11 @@ app.post('/signup', userController.signupApi);
 // 로그인 API
 app.post('/login', userController.loginApi);
 
-// 마이페이지 리스트 API
-app.get('/feedback/list', verifyToken, userController.feedbackListApi);
+// 마이페이지 API
+//app.get('/mypage', verifyToken, userController.myPageApi);
 
-// 마이페이지 싱글 코멘트 API
-app.post('/feedback/single', userController.feedbackSingleApi);
+// test API
+//app.post('/test', userController.testApi);
 
 app.listen(port, () => {
     console.log(`Server is running at ${port}!`);
