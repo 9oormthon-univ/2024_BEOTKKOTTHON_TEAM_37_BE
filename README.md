@@ -15,27 +15,33 @@
 
 ## 기능
 
-✨ **안전한 댓글 필터링:** 작가들이 독자의 반응을 보면서도 부정적인 영향을 받지 않도록 필터링 기능을 제공합니다.
-✨ **긍정적 피드백 강조:** 작품 개선에 도움이 되는 건설적인 코멘트를 강조하여 창작자에게 긍정적인 원동력을 제공합니다.
-✨ **창작자와 독자의 교류:** 독자와 창작자 간의 건강한 대화를 장려하여 웹툰 커뮤니티를 강화합니다.
-✨ **내 피드백 모아보기:** 작가들은 자신의 작품에 대한 피드백을 모아볼 수 있습니다.
+✨ **안전한 댓글 필터링:**
+
+작가들이 독자의 반응을 보면서도 부정적인 영향을 받지 않도록 필터링 기능을 제공합니다.
+
+✨ **긍정적 피드백 강조:** 
+
+작품 개선에 도움이 되는 건설적인 코멘트를 강조하여 창작자에게 긍정적인 원동력을 제공합니다.
+
+✨ **창작자와 독자의 교류:** 
+
+독자와 창작자 간의 건강한 대화를 장려하여 웹툰 커뮤니티를 강화합니다.
+
+✨ **내 피드백 모아보기:** 
+
+작가들은 자신의 작품에 대한 피드백을 모아볼 수 있습니다.
 
 ## 팀원 소개
 
 | 정윤서 | 성나영 | 최윤서 | 황채원 |
-| --- | --- | --- | --- |
-| ![KakaoTalk_20240323_214501594](https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/f5541069-0caf-4ab0-8b35-a080fbc1e4c7)
- |  | <img width="265" alt="KakaoTalk_20240323_213355226" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/e8bd1b91-3ad9-43eb-a244-820e61cfc6d9">
- | ![KakaoTalk_20240323_224106547](https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/10764bb3-d22d-4d69-8887-1a9c8850d50c)
- |
+|:---:|:---:|:---:|:---:|
+| <img width="250" alt="KakaoTalk_20240323_213355226" src=https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/f5541069-0caf-4ab0-8b35-a080fbc1e4c7> |  | <img width="250" alt="KakaoTalk_20240323_213355226" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/e8bd1b91-3ad9-43eb-a244-820e61cfc6d9"> | <img width="250" alt="KakaoTalk_20240323_213355226" src=https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/10764bb3-d22d-4d69-8887-1a9c8850d50c> |
 |  |  | [@YunseoChoe](https://github.com/YunseoChoe) | [@uommou](https://github.com/uommou) |
 | 기획 | 디자인 | 백엔드 | 백엔드, PM |
 
 | 이종범 | 이준원 | 이태환 |
-| --- | --- | --- |
-| <img width="260" alt="KakaoTalk_20240323_213355226_01" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/146e1052-fdb7-46df-82eb-a2bc3b97cb4d">
- |  | <img width="252" alt="KakaoTalk_20240323_213355226_02" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/eea34f2c-631d-4426-b6f2-e7e89c499321">
- |
+|:---:|:---:|:---:|
+| <img width="250" alt="KakaoTalk_20240323_213355226_01" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/146e1052-fdb7-46df-82eb-a2bc3b97cb4d"> |  | <img width="250" alt="KakaoTalk_20240323_213355226_02" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/eea34f2c-631d-4426-b6f2-e7e89c499321"> |
 | [@KorJIGSAW](https://github.com/KorJIGSAW) | [@junwlee](https://github.com/junwlee) | [@taehwamlee203](https://github.com/taehwamlee203) |
 | 프론트엔드 | 프론트엔드 | 프론트엔드 |
 
@@ -56,6 +62,14 @@
 **COMMUNICATION**
 
 <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"><img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+
+## 주요화면
+
+| 화면 이름 | 화면 사진 | 화면 설명 |
+|:-----------:|:-----------:|-----------|
+| 로그인 화면 |  | 이 화면에서 사용자는 자신의 계정으로 로그인할 수 있습니다. |
+| 메인 대시보드 |  | 메인 대시보드에서 사용자는 웹툰의 다양한 통계를 볼 수 있고, 최신 피드백을 확인할 수 있습니다. |
+| 설정 화면 |  | 메인 대시보드에서 사용자는 웹툰의 다양한 통계를 볼 수 있고, 최신 피드백을 확인할 수 있습니다. |
 
 ## 프로젝트 구조
 
