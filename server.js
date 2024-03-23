@@ -62,11 +62,11 @@ app.post('/signup', userController.signupApi);
 // 로그인 API
 app.post('/login', userController.loginApi);
 
-// 마이페이지 API
-//app.get('/mypage', verifyToken, userController.myPageApi);
+// 마이페이지 리스트 API
+app.get('/feedback/list', verifyToken, userController.feedbackListApi);
 
-// test API
-//app.post('/test', userController.testApi);
+// 마이페이지 싱글 코멘트 API
+app.post('feedback/single', userController.feedbackSingleApi);
 
 app.listen(port, () => {
     console.log(`Server is running at ${port}!`);

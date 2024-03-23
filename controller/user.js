@@ -75,11 +75,18 @@ const loginApi = async (req, res) => {
     }
 }
 
-// const myPageApi = (req, res) => {
-//     const userInfo = { name: req.name, email: req.email };
-//     // 추가로 필터링된 댓글도 포함하기
-//     return res.json(userInfo);
-// }
+const feedbackListApi = (req, res) => {
+    const userInfo = { id: req.id, name: req.name, email: req.email };
+    // 유저의 인포에 따라 리스트 반환
+    // 리스트에는 웹툰 제목, 회차, 부제목이 들어가야 함.
+    return res.json();
+}
+
+const feedbackSingleApi = (req, res) => {
+    const feedbackInfo = { webtoon_title: req.webtoon_title, feedback_number: req.feedback_number };
+    // 웹툰 제목, 회차 번호를 받아 피드백 내용을 반환
+    return res.json(userInfo);
+}
 
 const testApi = (req, res) => {
     const name = req.body.name;
@@ -92,4 +99,4 @@ const testApi = (req, res) => {
     }
 }
 
-module.exports = {hiApi, loginApi, signupApi, testApi };
+module.exports = {hiApi, loginApi, signupApi, testApi, feedbackListApi, feedbackSingleApi };
