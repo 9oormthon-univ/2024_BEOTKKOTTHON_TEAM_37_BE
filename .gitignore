@@ -6,3 +6,5 @@ node_modules
 ancient-ivy-416408-f8dea10e5b2d.json
 .git
 config.json
+results.json
+migrations
