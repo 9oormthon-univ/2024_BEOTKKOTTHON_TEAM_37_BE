@@ -24,13 +24,18 @@
 
 | 정윤서 | 성나영 | 최윤서 | 황채원 |
 | --- | --- | --- | --- |
-|  |  |  |  |
+| ![KakaoTalk_20240323_214501594](https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/f5541069-0caf-4ab0-8b35-a080fbc1e4c7)
+ |  | <img width="265" alt="KakaoTalk_20240323_213355226" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/e8bd1b91-3ad9-43eb-a244-820e61cfc6d9">
+ | ![KakaoTalk_20240323_224106547](https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/10764bb3-d22d-4d69-8887-1a9c8850d50c)
+ |
 |  |  | [@YunseoChoe](https://github.com/YunseoChoe) | [@uommou](https://github.com/uommou) |
 | 기획 | 디자인 | 백엔드 | 백엔드, PM |
 
 | 이종범 | 이준원 | 이태환 |
 | --- | --- | --- |
-|  |  |  |
+| <img width="260" alt="KakaoTalk_20240323_213355226_01" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/146e1052-fdb7-46df-82eb-a2bc3b97cb4d">
+ |  | <img width="252" alt="KakaoTalk_20240323_213355226_02" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_37_BE/assets/90598552/eea34f2c-631d-4426-b6f2-e7e89c499321">
+ |
 | [@KorJIGSAW](https://github.com/KorJIGSAW) | [@junwlee](https://github.com/junwlee) | [@taehwamlee203](https://github.com/taehwamlee203) |
 | 프론트엔드 | 프론트엔드 | 프론트엔드 |
 
