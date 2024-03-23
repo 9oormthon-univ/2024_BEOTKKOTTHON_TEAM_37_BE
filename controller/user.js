@@ -75,11 +75,85 @@ const loginApi = async (req, res) => {
     }
 }
 
-// const myPageApi = (req, res) => {
-//     const userInfo = { name: req.name, email: req.email };
-//     // 추가로 필터링된 댓글도 포함하기
-//     return res.json(userInfo);
-// }
+const feedbackListApi = async (req, res) => {
+    try {
+        const userId = req.id; // 요청에서 사용자 ID 가져오기
+
+        // webtoon TB에서 가져오기
+        const userWebtoons = await models.webtoon.findAll({
+            where: { 
+                user_id: userId
+            },
+            attributes: ['id', 'webtoon_title'] // 'webtoon_title'을 'title'로 변경, 데이터베이스 스키마에 맞게 조정 필요
+        });
+
+        const feedbacks_array = [];
+
+        for (const userWebtoon of userWebtoons) {
+            const webtoonId = userWebtoon.id;
+
+            // feedback TB에서 가져오기
+            const webtoonFeedbacks = await models.feedback.findAll({
+                where: {
+                    webtoon_id: webtoonId
+                },
+                attributes: ['number', 'subtitle'] // 필요한 속성만 지정
+            });
+
+            // 각 웹툰의 feedbacks를 조정하여 원하는 형식으로 만들기
+            const feedbacksFormatted = webtoonFeedbacks.map(feedback => ({
+                title: userWebtoon.webtoon_title, // 각 feedback에 웹툰 제목 추가
+                number: feedback.number,
+                subtitle: feedback.subtitle
+            }));
+
+            feedbacks_array.push(...feedbacksFormatted); // 수정된 feedbacks를 최종 배열에 추가
+        }
+
+        // 최종 결과 객체 생성
+        const result = {
+            id: req.id,
+            name: req.name,
+            email: req.email,
+            webtoons: feedbacks_array 
+        };
+
+        // JSON 형태로 반환
+        return res.json(result);
+    } catch (error) {
+        console.error("Error fetching user webtoons:", error);
+        return res.status(500).send("Internal Server Error");
+    }
+}
+
+const feedbackSingleApi = async (req, res) => {
+    const { webtoon_title, feedback_number } = req.body;
+    try {
+        const webtoon = await models.webtoon.findOne({
+            where: { webtoon_title: webtoon_title }
+        });
+
+        if (!webtoon) {
+            return res.status(404).json({ error: "웹툰을 찾을 수 없습니다." });
+        }
+
+        const feedback = await models.feedback.findOne({
+            where: {
+                webtoon_id: webtoon.id,
+                number: feedback_number
+            }
+        });
+
+        if (!feedback) {
+            return res.status(404).json({ error: "해당 회차의 피드백을 찾을 수 없습니다." });
+        }
+
+        res.json({ feedback: feedback.feedback }); // 수정된 응답 방식
+    } catch (error) {
+        console.error("피드백 조회 중 오류 발생:", error);
+        res.status(500).json({ error: "서버 내부 오류가 발생했습니다." });
+    }
+}
 
 const testApi = (req, res) => {
     const name = req.body.name;
@@ -92,4 +166,4 @@ const testApi = (req, res) => {
     }
 }
 
-module.exports = {hiApi, loginApi, signupApi, testApi };
+module.exports = {hiApi, loginApi, signupApi, testApi, feedbackListApi, feedbackSingleApi};
