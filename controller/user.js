@@ -75,17 +75,40 @@ const loginApi = async (req, res) => {
     }
 }
 
-const feedbackListApi = (req, res) => {
+const feedbackListApi = async (req, res) => {
     const userInfo = { id: req.id, name: req.name, email: req.email };
     // 유저의 인포에 따라 리스트 반환
     // 리스트에는 웹툰 제목, 회차, 부제목이 들어가야 함.
     return res.json();
 }
 
-const feedbackSingleApi = (req, res) => {
-    const feedbackInfo = { webtoon_title: req.webtoon_title, feedback_number: req.feedback_number };
-    // 웹툰 제목, 회차 번호를 받아 피드백 내용을 반환
-    return res.json(userInfo);
+const feedbackSingleApi = async (req, res) => {
+    const { webtoon_title, feedback_number } = req.body;
+    try {
+        const webtoon = await models.webtoon.findOne({
+            where: { webtoon_title: webtoon_title }
+        });
+
+        if (!webtoon) {
+            return res.status(404).json({ error: "웹툰을 찾을 수 없습니다." });
+        }
+
+        const feedback = await models.feedback.findOne({
+            where: {
+                webtoon_id: webtoon.id,
+                number: feedback_number
+            }
+        });
+
+        if (!feedback) {
+            return res.status(404).json({ error: "해당 회차의 피드백을 찾을 수 없습니다." });
+        }
+
+        res.json({ feedback: feedback.feedback }); // 수정된 응답 방식
+    } catch (error) {
+        console.error("피드백 조회 중 오류 발생:", error);
+        res.status(500).json({ error: "서버 내부 오류가 발생했습니다." });
+    }
 }
 
 const testApi = (req, res) => {
