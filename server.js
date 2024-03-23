@@ -66,7 +66,7 @@ app.post('/login', userController.loginApi);
 app.get('/feedback/list', verifyToken, userController.feedbackListApi);
 
 // 마이페이지 싱글 코멘트 API
-app.post('feedback/single', userController.feedbackSingleApi);
+app.post('/feedback/single', userController.feedbackSingleApi);
 
 app.listen(port, () => {
     console.log(`Server is running at ${port}!`);
