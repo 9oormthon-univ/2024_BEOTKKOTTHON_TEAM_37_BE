@@ -4,7 +4,8 @@ const fs = require('fs');
 async function crawlAndSave(url) {
     const browser = await puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        timeout: 60000
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle2' });
